@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E2E06283-89E8-4DBE-9594-AA3C6135FCD4}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
+		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BornToMove", "BornToMove\BornToMove.csproj", "{69A95291-5935-4958-96A9-11CF8CF686EE}"
