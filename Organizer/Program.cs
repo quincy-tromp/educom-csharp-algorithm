@@ -26,10 +26,11 @@ namespace Organizer
             TimeSpan ts_2 = stopWatch.Elapsed;
 
             ShowList("Unsorted list", unosrtedList);
-            // Results
+            // Result 1: ShiftHighestSort
             ShowList("Sorted list 1", sortedList_1);
             validateSortedList(sortedList_1);
             Console.WriteLine("RunTime " + ts_1);
+            // Result 2: RotateSort
             ShowList("Sorted list 2", sortedList_2);
             validateSortedList(sortedList_2);
             Console.WriteLine("RunTime " + ts_2);
