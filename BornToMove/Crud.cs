@@ -5,6 +5,11 @@ namespace BornToMove
 {
     public class Crud : ICrud
     {
+        /// <summary>
+		/// Connects to MySQL database
+		/// </summary>
+        ///
+        /// <returns>Returns MySqlConnection object</returns>
         public MySqlConnection Connect()
         {
             var connString = "Server=localhost;Database=born2move;Uid=born2move_user;Pwd=IRo4HiMfdl!x2VWN;";
@@ -12,6 +17,11 @@ namespace BornToMove
             return conn;
         }
 
+        /// <summary>
+		/// Checks if MySqlConnection for connection
+		/// </summary>
+        ///
+        /// <returns>TRUE if MySqlConnection is not null | FALSE if MySqlConnection is null</returns>
         public bool IsConnected(MySqlConnection? conn)
         {
             if (conn == null)
@@ -24,7 +34,15 @@ namespace BornToMove
             }
         }
 
-        public void CreateMove(string name, string description, int sweatRate)
+        /// <summary>
+		/// Creates a new Move
+		/// </summary>
+        /// 
+        /// <params name="name">Name of the move</params>
+        /// <params name="description">Description of the move</params>
+        /// <param name="sweatRate">The sweat rating of the move</param>
+
+        public void CreateOneMove(string name, string description, int sweatRate)
         {
             var conn = Connect();
             if (IsConnected(conn))
@@ -43,7 +61,12 @@ namespace BornToMove
             }
         }
 
-        public List<int>? ReadMoveIds()
+        /// <summary>
+		/// Read IDs for all moves
+		/// </summary>
+        /// 
+        ///<returns>Returns List of move IDs as integers</returns>
+        public List<int>? ReadAllMoveIds()
         {
             List<int> moveIds = new List<int>();
             var conn = Connect();
@@ -76,8 +99,7 @@ namespace BornToMove
             var conn = Connect();
             if (IsConnected(conn))
             {
-                var sql = "SELECT * FROM move" +
-                    "WHERE id = @id;";
+                var sql = "SELECT * FROM move WHERE id = @id;";
                 MySqlCommand cmd = new MySqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@id", moveId);
 
@@ -103,7 +125,7 @@ namespace BornToMove
             return null;
         }
 
-        public Dictionary<int, string>? ReadAllMoveNames()
+        public Dictionary<int, string>? ReadMoveNames()
         {
             Dictionary<int, string> moveNames = new Dictionary<int, string>();
             var conn = Connect();
