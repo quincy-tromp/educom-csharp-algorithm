@@ -5,8 +5,6 @@ namespace BornToMove;
 
 class BornToMove
 {
-    public static View view = new View();
-
     static void Main(string[] args)
     {
         Crud crud = new Crud();
@@ -18,4 +16,3 @@ class BornToMove
 
     }
 }
-

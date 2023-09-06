@@ -5,19 +5,29 @@ namespace BornToMove
 {
 	public class Model
 	{
+        // Properties
 		private MoveCrud crud;
         public Presenter presenter;
-		public Move? move;
+		public Move? chosenMove; 
         public Dictionary<int, string>? moveNames;
-        public int userChoice;
-        public int MoveChoice;
+        public int userChoice = -1;
+        public int MoveChoice = -1; 
+        public string newMoveName = "";
+        public int newMoveSweatRate = -1;
+        public string newMoveDescription = "";
+        public int userReview = -1;
+        public int userIntensity = -1;
 
+        // Constructor
 		public Model(MoveCrud crud)
 		{
 			this.crud = crud;
 		}
 
-        public void GetUserChoice()
+        /// <summary>
+		/// Sets userChoice
+		/// </summary>
+        public void SetUserChoice()
         {
             userChoice = presenter.view.AskForNumber();
             while (!(userChoice == 1 || userChoice == 2))
@@ -27,6 +37,9 @@ namespace BornToMove
             }
         }
 
+        /// <summary>
+		/// Sets moveChoice
+		/// </summary>
         public void ChooseMoveFromList(Dictionary<int, string> moveNames)
         {
             MoveChoice = presenter.view.AskForNumber();
@@ -37,35 +50,116 @@ namespace BornToMove
             }
         }
 
+        /// <summary>
+		/// Generates a move suggestion for user/Sets chosenMove
+		/// </summary>
         public void GenerateMoveSuggestion()
         {
             var moveIds = crud.GetAllMoveIds();
             if (moveIds != null)
             {
                 Random random = new Random();
-                move = crud.GetMoveById(random.Next(1, moveIds.Count));
+                chosenMove = crud.GetMoveById(random.Next(1, moveIds.Count));
             }
         }
 
+        /// <summary>
+		/// Sets moveNames
+		/// </summary>
         public void SetMoveNames()
         {
             moveNames = crud.GetMoveNames();
         }
 
-        public void AddOneMove(string name, int sweatRate, string description)
+        /// <summary>
+		/// Sets newMoveName
+		/// </summary>
+        private void SetNewMoveName()
         {
-            crud.CreateOneMove(name, sweatRate, description);
+            presenter.view.AskForThis("move name");
+            newMoveName = presenter.view.AskForString();
+
+            while (moveNames.ContainsValue(newMoveName))
+            {
+                presenter.view.DisplayTryAgain("Move already exists. ");
+                newMoveName = presenter.view.AskForString();
+            }
         }
 
-        public void SetMove(int chosenMoveId)
+        /// <summary>
+		/// Sets newMoveSweatRate
+		/// </summary>
+        private void SetNewMoveSweatRate()
+        {
+            presenter.view.AskForThis("sweatRate");
+            newMoveSweatRate = presenter.view.AskForNumber();
+            while (!(newMoveSweatRate >= 1 && newMoveSweatRate <= 5))
+            {
+                presenter.view.DisplayTryAgain("SweatRate should be between 1 and 5. ");
+                newMoveSweatRate = presenter.view.AskForNumber();
+            }
+        }
+
+        /// <summary>
+		/// Sets newMoveDescription
+		/// </summary>
+        private void SetNewMoveDescription()
+        {
+            presenter.view.AskForThis("description");
+            newMoveDescription = presenter.view.AskForString();
+        }
+
+        /// <summary>
+		/// Creates new move
+		/// </summary>
+        public void AddNewMove()
+        {
+            SetNewMoveName();
+            SetNewMoveSweatRate();
+            SetNewMoveDescription();
+            crud.CreateOneMove(newMoveName, newMoveSweatRate, newMoveDescription);
+        }
+
+        /// <summary>
+		/// Sets chosenMove based on chosenMoveId
+		/// </summary>
+        ///
+        ///<param name="chosenMoveId">The ID of the chosen move</param>
+        public void SetChosenMove(int chosenMoveId)
         {
             try
             {
-                move = crud.GetMoveById(chosenMoveId);
+                chosenMove = crud.GetMoveById(chosenMoveId);
             }
             catch (Exception e)
             {
                 Console.WriteLine("Process failed due to technical error: " + e.Message);
+            }
+        }
+
+        /// <summary>
+		/// Sets userReview
+		/// </summary>
+        public void SetUserReview()
+        {
+            userReview = presenter.view.AskForUserReview();
+            while (!(userReview >= 1 && userReview <= 5))
+            {
+                presenter.view.DisplayTryAgain("");
+                userReview = presenter.view.AskForNumber();
+            }
+        }
+
+        /// <summary>
+		/// Sets userIntensity
+		/// </summary>
+        public void SetUserIntensity()
+        {
+            userIntensity = presenter.view.AskForUserIntensity();
+            while (!(userIntensity >= 1 && userIntensity <= 5))
+            {
+                presenter.view.DisplayTryAgain("");
+                userIntensity = presenter.view.AskForNumber();
             }
         }
     }

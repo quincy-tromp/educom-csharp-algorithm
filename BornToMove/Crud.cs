@@ -9,7 +9,7 @@ namespace BornToMove
 		/// Connects to MySQL database
 		/// </summary>
         ///
-        /// <returns>Returns MySqlConnection object</returns>
+        /// <returns>MySqlConnection object</returns>
         public MySqlConnection Connect()
         {
             var connString = "Server=localhost;Database=born2move;Uid=born2move_user;Pwd=IRo4HiMfdl!x2VWN;";
@@ -18,10 +18,12 @@ namespace BornToMove
         }
 
         /// <summary>
-		/// Checks if MySqlConnection for connection
+		/// Checks MySqlConnection for connection
 		/// </summary>
         ///
-        /// <returns>TRUE if MySqlConnection is not null | FALSE if MySqlConnection is null</returns>
+        /// <params name="conn">MySqlConnection object to check</params>
+        ///
+        /// <returns>TRUE if MySqlConnection is NOT Null / FALSE if MySqlConnection is Null</returns>
         public bool IsConnected(MySqlConnection? conn)
         {
             if (conn == null)
@@ -35,12 +37,12 @@ namespace BornToMove
         }
 
         /// <summary>
-		/// Creates a new Move
+		/// Creates a new move in DB
 		/// </summary>
         /// 
         /// <params name="name">Name of the move</params>
         /// <params name="description">Description of the move</params>
-        /// <param name="sweatRate">The sweat rating of the move</param>
+        /// <param name="sweatRate">The sweatRate of the move</param>
 
         public void CreateOneMove(string name, string description, int sweatRate)
         {
@@ -62,10 +64,10 @@ namespace BornToMove
         }
 
         /// <summary>
-		/// Read IDs for all moves
+		/// Reads all moves IDs
 		/// </summary>
         /// 
-        ///<returns>Returns List of move IDs as integers</returns>
+        ///<returns>List of move IDs as integers / Null if no IDs found in DB</returns>
         public List<int>? ReadAllMoveIds()
         {
             List<int> moveIds = new List<int>();
@@ -94,6 +96,13 @@ namespace BornToMove
             return null;
         }
 
+        /// <summary>
+		/// Read one move by ID
+		/// </summary>
+        ///
+        /// <param name="moveId">The ID of the move to search for</param>
+        /// 
+        ///<returns>Move object / Null if no move found in DB</returns>
         public Move? ReadMoveById(int moveId)
         {
             var conn = Connect();
@@ -125,6 +134,11 @@ namespace BornToMove
             return null;
         }
 
+        /// <summary>
+		/// Read all move names
+		/// </summary>
+        /// 
+        ///<returns>Dictionary with move ID as key and move name as value / Null if no move found in DB</returns>
         public Dictionary<int, string>? ReadMoveNames()
         {
             Dictionary<int, string> moveNames = new Dictionary<int, string>();
@@ -154,6 +168,11 @@ namespace BornToMove
             return null;
         }
 
+        /// <summary>
+		/// Read one move by ID
+		/// </summary>
+        /// 
+        ///<returns>Dictionary with move ID as key and Move object as value / Null if no move found in DB</returns>
         public Dictionary<int, Move>? ReadAllMoves()
         {
             Dictionary<int, Move> moves = new Dictionary<int, Move>();

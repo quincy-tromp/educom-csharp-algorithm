@@ -81,6 +81,10 @@ namespace BornToMove
             }
         }
 
+        /// <summary>
+		/// Displays move 
+		/// </summary>
+        /// <param name="move">The Move object to display</param>
         public void DisplayMove(Move move)
         {
             Console.WriteLine("\n");
@@ -89,6 +93,9 @@ namespace BornToMove
             Console.WriteLine("Description: " + move.Description);
         }
 
+        /// <summary>
+		/// Asks user for review
+		/// </summary>
         public int AskForUserReview()
         {
             Console.WriteLine("\n");
@@ -96,6 +103,9 @@ namespace BornToMove
             return AskForNumber();
         }
 
+        /// <summary>
+		/// Asks user for intensity
+		/// </summary>
         public int AskForUserIntensity()
         {
             Console.WriteLine("\n");
@@ -103,22 +113,36 @@ namespace BornToMove
             return AskForNumber();
         }
 
+        /// <summary>
+		/// Asks user to enter given variable
+		/// </summary>
+        ///
+        /// <param name="askForThis">The variable to ask user for</param>
         public void AskForThis(string askForThis)
         {
             Console.Write("Enter " + askForThis);
         }
 
+        /// <summary>
+		/// Displays generic error
+		/// </summary>
         public void DisplayGenericError()
         {
             Console.WriteLine("Something went wrong, please try again later.");
         }
 
+        /// <summary>
+		/// Displays text when creating new move
+		/// </summary>
         public void DisplayCreatingNewMove()
         {
             Console.WriteLine("\n");
             Console.WriteLine("Creating new move.");
         }
 
+        /// <summary>
+		/// Displays text for user to try again
+		/// </summary>
         public void DisplayTryAgain(string Error)
         {
             Console.WriteLine(Error + "Try again.");
