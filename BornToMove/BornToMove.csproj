@@ -10,4 +10,8 @@
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.1.0" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BornToMove.DAL\BornToMove.DAL.csproj" />
+    <ProjectReference Include="..\BornToMove.Business\BornToMove.Business.csproj" />
+  </ItemGroup>
 </Project>

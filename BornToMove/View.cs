@@ -1,4 +1,5 @@
 ﻿using System;
+using BornToMove.DAL;
 
 namespace BornToMove
 {
@@ -22,7 +23,7 @@ namespace BornToMove
         /// <summary>
         /// Displays initial choices
         /// </summary>
-        public void DisplayInitialChoice()
+        public void DisplayInitialOptions()
 		{
             Console.WriteLine("\n");
             Console.WriteLine("Do you want to:");

@@ -1,7 +1,7 @@
 ﻿using System;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
-namespace BornToMove
+namespace BornToMove.DAL
 {
     public class Crud : ICrud
     {
@@ -122,7 +122,11 @@ namespace BornToMove
                         string name = rdr.GetString(1);
                         string description = rdr.GetString(2);
                         int sweatRate = rdr.GetInt32(3);
-                        return new Move(id, name, description, sweatRate);
+                        return new Move() {
+                            Name = name,
+                            Description = description,
+                            SweatRate = sweatRate,
+                            Id = id};
                     }
                     return null;
                 }
@@ -192,7 +196,11 @@ namespace BornToMove
                         string name = rdr.GetString(1);
                         string description = rdr.GetString(2);
                         int sweatRate = rdr.GetInt32(3);
-                        moves.Add(id, new Move(id, name, description, sweatRate));
+                        moves.Add(id, new Move() {
+                            Name = name,
+                            Description = description,
+                            SweatRate = sweatRate,
+                            Id = id });
                     }
                     return moves;
                 }

@@ -1,4 +1,6 @@
-﻿namespace BornToMove
+﻿using BornToMove.DAL;
+
+namespace BornToMove
 {
     public class Presenter
 	{
@@ -15,72 +17,51 @@
 		}
 
         /// <summary>
-        /// Handles application 
-        /// </summary>
-		public void HandleApp()
-		{
-			StartApp();
-			RunApp();
-		}
-
-        /// <summary>
-        /// Starts up application
-        /// </summary>
-		private void StartApp()
-		{
-			view.DisplayWelcome();
-			view.DisplayOpeningMessage();
-        }
-
-        /// <summary>
         /// Runs the application logic
         /// </summary>
-        private void RunApp()
+        public void RunApp()
         {
-            view.DisplayInitialChoice();
-            model.SetUserChoice();
+            // Start application
+            view.DisplayWelcome();
+            view.DisplayOpeningMessage();
+            view.DisplayInitialOptions();
+            // Asks user (1) generate move, or (2) choose move from list
+            model.SetInitialChoice();
 
-            if (model.userChoice == 1)
-            {
+            if (model.choiceFromInitialOptions == 1)
+            { // Generates a move
                 model.GenerateMoveSuggestion();
             }
-			if (model.userChoice == 2)
-			{
-				model.SetMoveNames();
-
+			if (model.choiceFromInitialOptions == 2)
+			{ // Gets list of move names
+				model.GetMoveNameList();
+                
                 if (model.moveNames == null)
-                {
+                { // Displays error if no move names retrieved
                     view.DisplayGenericError();
                 }
                 else
-                {
+                { // Display list of move names and asks user to choose one
                     view.DisplayMoveNames(model.moveNames);
                     model.ChooseMoveFromList(model.moveNames);
 
-                    if (model.MoveChoice == -1)
-                    {
-                        view.DisplayGenericError();
+                    if (model.fromListChoice == 0)
+                    { // Asks user to enter new move
+                        model.AddNewMove();
                     }
                     else
-                    {
-                        if (model.MoveChoice == 0)
-                        {
-                            model.AddNewMove();
-                        }
-                        else
-                        {
-                            model.SetChosenMove(model.MoveChoice);
-                        }
+                    { // Sets selected move as chosen from list
+                        model.SetSelectedMove(model.moveChosenFromList);
                     }
                 }
             }
-            if (model.chosenMove == null)
-            {
+            if (model.selectedMove == null)
+            { // Displays error if no moves selected
                 view.DisplayGenericError();
             }
             else
-            {
-                view.DisplayMove(model.chosenMove);
+            {   // Displays move and asks user review and intensity
+                view.DisplayMove(model.selectedMove);
                 model.SetUserReview();
                 model.SetUserIntensity();
             }

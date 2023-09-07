@@ -1,7 +1,7 @@
 ﻿using System;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
-namespace BornToMove
+namespace BornToMove.DAL
 {
     public interface ICrud
     {

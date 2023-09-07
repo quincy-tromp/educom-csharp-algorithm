@@ -1,20 +1,17 @@
-﻿using System;
-using System.Xml.Linq;
+﻿using BornToMove.DAL;
 
 namespace BornToMove
 {
-	public class Model
+    public class Model
 	{
         // Properties
 		private MoveCrud crud;
         public Presenter presenter;
-		public Move? chosenMove; 
-        public Dictionary<int, string>? moveNames;
-        public int userChoice = -1;
-        public int MoveChoice = -1; 
-        public string newMoveName = "";
-        public int newMoveSweatRate = -1;
-        public string newMoveDescription = "";
+		public Move? selectedMove; 
+        public Dictionary<int, string> moveNames = new Dictionary<int, string>();
+        public int choiceFromInitialOptions = -1;
+        public string moveChosenFromList = "";
+        public int fromListChoice = -1;
         public int userReview = -1;
         public int userIntensity = -1;
 
@@ -27,13 +24,13 @@ namespace BornToMove
         /// <summary>
 		/// Sets userChoice
 		/// </summary>
-        public void SetUserChoice()
+        public void SetInitialChoice()
         {
-            userChoice = presenter.view.AskForNumber();
-            while (!(userChoice == 1 || userChoice == 2))
+            choiceFromInitialOptions = presenter.view.AskForNumber();
+            while (!(choiceFromInitialOptions == 1 || choiceFromInitialOptions == 2))
             {
                 presenter.view.DisplayTryAgain("");
-                userChoice = presenter.view.AskForNumber();
+                choiceFromInitialOptions = presenter.view.AskForNumber();
             }
         }
 
@@ -42,12 +39,13 @@ namespace BornToMove
 		/// </summary>
         public void ChooseMoveFromList(Dictionary<int, string> moveNames)
         {
-            MoveChoice = presenter.view.AskForNumber();
-            while (!(moveNames.ContainsKey(MoveChoice) || MoveChoice == 0))
+            fromListChoice = presenter.view.AskForNumber();
+            while (!(moveNames.ContainsKey(fromListChoice) || fromListChoice == 0))
             {
                 presenter.view.DisplayTryAgain("");
-                MoveChoice = presenter.view.AskForNumber();
+                fromListChoice = presenter.view.AskForNumber();
             }
+            moveChosenFromList = moveNames[fromListChoice];
         }
 
         /// <summary>
@@ -55,58 +53,67 @@ namespace BornToMove
 		/// </summary>
         public void GenerateMoveSuggestion()
         {
-            var moveIds = crud.GetAllMoveIds();
+            var moveIds = crud.ReadMoveIds();
             if (moveIds != null)
             {
                 Random random = new Random();
-                chosenMove = crud.GetMoveById(random.Next(1, moveIds.Count));
+                selectedMove = crud.ReadMoveById(random.Next(1, moveIds.Count));
             }
         }
 
         /// <summary>
 		/// Sets moveNames
 		/// </summary>
-        public void SetMoveNames()
+        public void GetMoveNameList()
         {
-            moveNames = crud.GetMoveNames();
+            var names = crud.ReadMoveNames();
+            if (names != null)
+            {
+                for (int i = 1; i < names.Count + 1; i++)
+                {
+                    moveNames.Add(i, names[i - 1]);
+                }
+            }
         }
 
         /// <summary>
 		/// Sets newMoveName
 		/// </summary>
-        private void SetNewMoveName()
+        private string GetNewMoveName()
         {
             presenter.view.AskForThis("move name");
-            newMoveName = presenter.view.AskForString();
+            string newName = presenter.view.AskForString();
 
-            while (moveNames.ContainsValue(newMoveName))
+            while (moveNames.ContainsValue(newName))
             {
                 presenter.view.DisplayTryAgain("Move already exists. ");
-                newMoveName = presenter.view.AskForString();
+                newName = presenter.view.AskForString();
             }
+            return newName;
         }
 
         /// <summary>
 		/// Sets newMoveSweatRate
 		/// </summary>
-        private void SetNewMoveSweatRate()
+        private int GetNewMoveSweatRate()
         {
             presenter.view.AskForThis("sweatRate");
-            newMoveSweatRate = presenter.view.AskForNumber();
-            while (!(newMoveSweatRate >= 1 && newMoveSweatRate <= 5))
+            int newSweatRate = presenter.view.AskForNumber();
+            while (!(newSweatRate >= 1 && newSweatRate <= 5))
             {
                 presenter.view.DisplayTryAgain("SweatRate should be between 1 and 5. ");
-                newMoveSweatRate = presenter.view.AskForNumber();
+                newSweatRate = presenter.view.AskForNumber();
             }
+            return newSweatRate;
         }
 
         /// <summary>
 		/// Sets newMoveDescription
 		/// </summary>
-        private void SetNewMoveDescription()
+        private string GetNewMoveDescription()
         {
             presenter.view.AskForThis("description");
-            newMoveDescription = presenter.view.AskForString();
+            return presenter.view.AskForString();
         }
 
         /// <summary>
@@ -114,22 +121,25 @@ namespace BornToMove
 		/// </summary>
         public void AddNewMove()
         {
-            SetNewMoveName();
-            SetNewMoveSweatRate();
-            SetNewMoveDescription();
-            crud.CreateOneMove(newMoveName, newMoveSweatRate, newMoveDescription);
+            string name = GetNewMoveName();
+            int sweatRate = GetNewMoveSweatRate();
+            string description = GetNewMoveDescription();
+            crud.CreateMove(new Move() {
+                Name = name,
+                Description = description,
+                SweatRate = sweatRate });
         }
 
         /// <summary>
-		/// Sets chosenMove based on chosenMoveId
+		/// Sets SelectedMove based on chosenMoveId
 		/// </summary>
         ///
-        ///<param name="chosenMoveId">The ID of the chosen move</param>
-        public void SetChosenMove(int chosenMoveId)
+        ///<param name="moveName">The name of the move</param>
+        public void SetSelectedMove(string moveName)
         {
             try
             {
-                chosenMove = crud.GetMoveById(chosenMoveId);
+                selectedMove = crud.ReadMoveByName(moveName)[0];
             }
             catch (Exception e)
             {

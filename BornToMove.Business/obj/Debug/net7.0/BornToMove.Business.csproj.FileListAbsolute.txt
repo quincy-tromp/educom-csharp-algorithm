@@ -1,0 +1,15 @@
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/BornToMove.Business.deps.json
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/BornToMove.Business.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/BornToMove.Business.pdb
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/BornToMove.DAL.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/BornToMove.DAL.pdb
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.csproj.AssemblyReference.cache
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.GeneratedMSBuildEditorConfig.editorconfig
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.AssemblyInfoInputs.cache
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.AssemblyInfo.cs
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.csproj.CoreCompileInputs.cache
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.csproj.CopyComplete
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/refint/BornToMove.Business.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.pdb
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/ref/BornToMove.Business.dll
