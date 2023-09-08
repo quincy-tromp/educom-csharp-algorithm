@@ -8,7 +8,6 @@ namespace BornToMove.Business
         // Fields
         private MoveCrud crud;
         // Properties
-        public IPresenter presenter;
         public Move? selectedMove;
         public Dictionary<int, string> moveNames = new Dictionary<int, string>();
         public int initialChoice = -1;
@@ -96,7 +95,7 @@ namespace BornToMove.Business
         }
 
         /// <summary>
-		/// Sets SelectedMove based on chosenMoveId
+		/// Sets SelectedMove based on move name chosen from list
 		/// </summary>
         ///<param name="moveName">The name of the move</param>
         public void SetSelectedMove(string moveName)

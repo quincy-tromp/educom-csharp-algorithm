@@ -3,7 +3,7 @@ using BornToMove.Business;
 
 namespace BornToMove
 {
-    public class Presenter : IPresenter
+    public class Presenter
 	{
         // Fields
 		private View view;
@@ -14,7 +14,6 @@ namespace BornToMove
 		{
 			this.view = view;
 			this.model = model;
-            this.model.presenter = this;
 		}
 
         /// <summary>
