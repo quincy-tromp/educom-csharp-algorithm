@@ -3,12 +3,11 @@ using MySqlConnector;
 
 namespace BornToMove.DAL
 {
-    public class Crud : ICrud
+    public class Crud 
     {
         /// <summary>
 		/// Connects to MySQL database
 		/// </summary>
-        ///
         /// <returns>MySqlConnection object</returns>
         public MySqlConnection Connect()
         {
@@ -20,9 +19,7 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Checks MySqlConnection for connection
 		/// </summary>
-        ///
         /// <params name="conn">MySqlConnection object to check</params>
-        ///
         /// <returns>TRUE if MySqlConnection is NOT Null / FALSE if MySqlConnection is Null</returns>
         public bool IsConnected(MySqlConnection? conn)
         {
@@ -39,7 +36,6 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Creates a new move in DB
 		/// </summary>
-        /// 
         /// <params name="name">Name of the move</params>
         /// <params name="description">Description of the move</params>
         /// <param name="sweatRate">The sweatRate of the move</param>
@@ -66,7 +62,6 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Reads all moves IDs
 		/// </summary>
-        /// 
         ///<returns>List of move IDs as integers / Null if no IDs found in DB</returns>
         public List<int>? ReadAllMoveIds()
         {
@@ -99,10 +94,8 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Read one move by ID
 		/// </summary>
-        ///
         /// <param name="moveId">The ID of the move to search for</param>
-        /// 
-        ///<returns>Move object / Null if no move found in DB</returns>
+        ///<returns> a Move object / Null if no move found in DB</returns>
         public Move? ReadMoveById(int moveId)
         {
             var conn = Connect();
@@ -141,8 +134,7 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Read all move names
 		/// </summary>
-        /// 
-        ///<returns>Dictionary with move ID as key and move name as value / Null if no move found in DB</returns>
+        ///<returns>A Dictionary with move ID as key and move name as value / Null if no move found in DB</returns>
         public Dictionary<int, string>? ReadMoveNames()
         {
             Dictionary<int, string> moveNames = new Dictionary<int, string>();
@@ -175,8 +167,7 @@ namespace BornToMove.DAL
         /// <summary>
 		/// Read one move by ID
 		/// </summary>
-        /// 
-        ///<returns>Dictionary with move ID as key and Move object as value / Null if no move found in DB</returns>
+        ///<returns>A Dictionary with move ID as key and Move object as value / Null if no move found in DB</returns>
         public Dictionary<int, Move>? ReadAllMoves()
         {
             Dictionary<int, Move> moves = new Dictionary<int, Move>();

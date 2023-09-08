@@ -1,15 +1,16 @@
 ﻿using BornToMove.DAL;
+using BornToMove.Business;
 
 namespace BornToMove
 {
-    public class Presenter
+    public class Presenter : IPresenter
 	{
         // Properties
 		public View view;
-		private Model model;
+		private BuMove model;
 
         // Constructor
-		public Presenter(View view, Model model)
+		public Presenter(View view, BuMove model)
 		{
 			this.view = view;
 			this.model = model;
@@ -17,7 +18,7 @@ namespace BornToMove
 		}
 
         /// <summary>
-        /// Runs the application logic
+        /// Contains the application logic
         /// </summary>
         public void RunApp()
         {
@@ -28,11 +29,11 @@ namespace BornToMove
             // Asks user (1) generate move, or (2) choose move from list
             model.SetInitialChoice();
 
-            if (model.choiceFromInitialOptions == 1)
+            if (model.initialChoice == 1)
             { // Generates a move
                 model.GenerateMoveSuggestion();
             }
-			if (model.choiceFromInitialOptions == 2)
+			if (model.initialChoice == 2)
 			{ // Gets list of move names
 				model.GetMoveNameList();
                 
@@ -45,13 +46,13 @@ namespace BornToMove
                     view.DisplayMoveNames(model.moveNames);
                     model.ChooseMoveFromList(model.moveNames);
 
-                    if (model.fromListChoice == 0)
+                    if (model.choiceFromList == 0)
                     { // Asks user to enter new move
                         model.AddNewMove();
                     }
                     else
                     { // Sets selected move as chosen from list
-                        model.SetSelectedMove(model.moveChosenFromList);
+                        model.SetSelectedMove(model.nameOfMoveChosenFromList);
                     }
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using BornToMove.DAL;
+using BornToMove.Business;
 
 namespace BornToMove
 {
@@ -71,7 +72,7 @@ namespace BornToMove
         /// <summary>
 		/// Displays move names
 		/// </summary>
-        /// <param name="moveNames">The associative array of move ids and move names from which to display move names</param>
+        /// <param name="moveNames">The Dictionary<int, string> of move Ids and move names</param>
         public void DisplayMoveNames(Dictionary<int, string> moveNames)
         {
             Console.WriteLine("\n");
@@ -117,7 +118,6 @@ namespace BornToMove
         /// <summary>
 		/// Asks user to enter given variable
 		/// </summary>
-        ///
         /// <param name="askForThis">The variable to ask user for</param>
         public void AskForThis(string askForThis)
         {

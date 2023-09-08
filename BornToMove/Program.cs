@@ -1,4 +1,5 @@
 ﻿using System;
+using BornToMove.Business;
 using BornToMove.DAL;
 
 namespace BornToMove;
@@ -9,7 +10,7 @@ class BornToMove
     {
         MoveContext context = new MoveContext();
         MoveCrud moveCrud = new MoveCrud(context);
-        Model model = new Model(moveCrud);
+        BuMove model = new BuMove(moveCrud);
         View view = new View();
         Presenter presenter = new Presenter(view, model);
         presenter.RunApp();

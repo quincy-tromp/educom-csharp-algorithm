@@ -1,24 +1,26 @@
-﻿using BornToMove.DAL;
+﻿using System;
+using BornToMove.DAL;
 
-namespace BornToMove
+namespace BornToMove.Business
 {
-    public class Model
+	public class BuMove
 	{
+        // Fields
+        private MoveCrud crud;
         // Properties
-		private MoveCrud crud;
-        public Presenter presenter;
-		public Move? selectedMove; 
+        public IPresenter presenter;
+        public Move? selectedMove;
         public Dictionary<int, string> moveNames = new Dictionary<int, string>();
-        public int choiceFromInitialOptions = -1;
-        public string moveChosenFromList = "";
-        public int fromListChoice = -1;
+        public int initialChoice = -1;
+        public string nameOfMoveChosenFromList = "";
+        public int choiceFromList = -1;
         public int userReview = -1;
         public int userIntensity = -1;
 
         // Constructor
-		public Model(MoveCrud crud)
+        public BuMove(MoveCrud crud)
 		{
-			this.crud = crud;
+            this.crud = crud;
 		}
 
         /// <summary>
@@ -26,11 +28,11 @@ namespace BornToMove
 		/// </summary>
         public void SetInitialChoice()
         {
-            choiceFromInitialOptions = presenter.view.AskForNumber();
-            while (!(choiceFromInitialOptions == 1 || choiceFromInitialOptions == 2))
+            initialChoice = presenter.view.AskForNumber();
+            while (!(initialChoice == 1 || initialChoice == 2))
             {
                 presenter.view.DisplayTryAgain("");
-                choiceFromInitialOptions = presenter.view.AskForNumber();
+                initialChoice = presenter.view.AskForNumber();
             }
         }
 
@@ -39,13 +41,13 @@ namespace BornToMove
 		/// </summary>
         public void ChooseMoveFromList(Dictionary<int, string> moveNames)
         {
-            fromListChoice = presenter.view.AskForNumber();
-            while (!(moveNames.ContainsKey(fromListChoice) || fromListChoice == 0))
+            choiceFromList = presenter.view.AskForNumber();
+            while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
             {
                 presenter.view.DisplayTryAgain("");
-                fromListChoice = presenter.view.AskForNumber();
+                choiceFromList = presenter.view.AskForNumber();
             }
-            moveChosenFromList = moveNames[fromListChoice];
+            nameOfMoveChosenFromList = moveNames[choiceFromList];
         }
 
         /// <summary>
@@ -124,10 +126,12 @@ namespace BornToMove
             string name = GetNewMoveName();
             int sweatRate = GetNewMoveSweatRate();
             string description = GetNewMoveDescription();
-            crud.CreateMove(new Move() {
+            crud.CreateMove(new Move()
+            {
                 Name = name,
                 Description = description,
-                SweatRate = sweatRate });
+                SweatRate = sweatRate
+            });
         }
 
         /// <summary>
@@ -172,6 +176,7 @@ namespace BornToMove
                 userIntensity = presenter.view.AskForNumber();
             }
         }
+
     }
 }
 
