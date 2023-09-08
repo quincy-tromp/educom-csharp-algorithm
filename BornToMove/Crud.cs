@@ -1,9 +1,10 @@
-﻿using System;
+﻿/*
+using System;
 using MySqlConnector;
 
 namespace BornToMove.DAL
 {
-    public class Crud 
+    public class Crud
     {
         /// <summary>
 		/// Connects to MySQL database
@@ -115,11 +116,13 @@ namespace BornToMove.DAL
                         string name = rdr.GetString(1);
                         string description = rdr.GetString(2);
                         int sweatRate = rdr.GetInt32(3);
-                        return new Move() {
+                        return new Move()
+                        {
                             Name = name,
                             Description = description,
                             SweatRate = sweatRate,
-                            Id = id};
+                            Id = id
+                        };
                     }
                     return null;
                 }
@@ -187,11 +190,13 @@ namespace BornToMove.DAL
                         string name = rdr.GetString(1);
                         string description = rdr.GetString(2);
                         int sweatRate = rdr.GetInt32(3);
-                        moves.Add(id, new Move() {
+                        moves.Add(id, new Move()
+                        {
                             Name = name,
                             Description = description,
                             SweatRate = sweatRate,
-                            Id = id });
+                            Id = id
+                        });
                     }
                     return moves;
                 }
@@ -204,4 +209,5 @@ namespace BornToMove.DAL
         }
     }
 }
+*/
 

@@ -1,4 +1,5 @@
-﻿using BornToMove.DAL;
+﻿/*
+using BornToMove.DAL;
 
 namespace BornToMove.Business
 {
@@ -6,7 +7,7 @@ namespace BornToMove.Business
 	{
         // Properties
 		private MoveCrud crud;
-        public IPresenter presenter;
+        public Presenter presenter;
 		public Move? selectedMove; 
         public Dictionary<int, string> moveNames = new Dictionary<int, string>();
         public int choiceFromInitialOptions = -1;
@@ -184,4 +185,4 @@ namespace BornToMove.Business
         }
     }
 }
-
+*/

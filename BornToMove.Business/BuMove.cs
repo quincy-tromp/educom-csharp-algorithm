@@ -24,30 +24,23 @@ namespace BornToMove.Business
 		}
 
         /// <summary>
-		/// Sets userChoice
-		/// </summary>
-        public void SetInitialChoice()
+        /// Validates the initial choice
+        /// </summary>
+        /// <param name="initialChoice">The inital choice made by user</param>
+        /// <returns>A boolean with True if initial choice is valid, or False if not valid</returns>
+        public bool ValidateInitialChoice(int initialChoice)
         {
-            initialChoice = presenter.view.AskForNumber();
-            while (!(initialChoice == 1 || initialChoice == 2))
-            {
-                presenter.view.DisplayTryAgain("");
-                initialChoice = presenter.view.AskForNumber();
-            }
+            return (initialChoice == 1 || initialChoice == 2);
         }
 
         /// <summary>
-		/// Sets moveChoice
-		/// </summary>
-        public void ChooseMoveFromList(Dictionary<int, string> moveNames)
+        /// Validates the choice from list
+        /// </summary>
+        /// <param name="choiceFromList">The choice from list made by user</param>
+        /// <returns>A boolean with True if chioice is valid, or False if not valid</returns>
+        public bool ValidateChoiceFromList(int choiceFromList)
         {
-            choiceFromList = presenter.view.AskForNumber();
-            while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
-            {
-                presenter.view.DisplayTryAgain("");
-                choiceFromList = presenter.view.AskForNumber();
-            }
-            nameOfMoveChosenFromList = moveNames[choiceFromList];
+            return (moveNames.ContainsKey(choiceFromList) || choiceFromList == 0);
         }
 
         /// <summary>
@@ -79,65 +72,32 @@ namespace BornToMove.Business
         }
 
         /// <summary>
-		/// Sets newMoveName
-		/// </summary>
-        private string GetNewMoveName()
+        /// Validates the new move name
+        /// </summary>
+        /// <param name="newMoveName">The name of the new move</param>
+        /// <returns>A boolean with True if move already exists, or False if move doesn't exist</returns>
+        public bool ValidateNewMoveName(string newMoveName)
         {
-            presenter.view.AskForThis("move name");
-            string newName = presenter.view.AskForString();
-
-            while (moveNames.ContainsValue(newName))
-            {
-                presenter.view.DisplayTryAgain("Move already exists. ");
-                newName = presenter.view.AskForString();
-            }
-            return newName;
+            return (moveNames.ContainsValue(newMoveName));
         }
 
-        /// <summary>
-		/// Sets newMoveSweatRate
-		/// </summary>
-        private int GetNewMoveSweatRate()
+        public bool ValidateNewMoveSweatRate(int newMoveSweatRate)
         {
-            presenter.view.AskForThis("sweatRate");
-            int newSweatRate = presenter.view.AskForNumber();
-            while (!(newSweatRate >= 1 && newSweatRate <= 5))
-            {
-                presenter.view.DisplayTryAgain("SweatRate should be between 1 and 5. ");
-                newSweatRate = presenter.view.AskForNumber();
-            }
-            return newSweatRate;
-        }
-
-        /// <summary>
-		/// Sets newMoveDescription
-		/// </summary>
-        private string GetNewMoveDescription()
-        {
-            presenter.view.AskForThis("description");
-            return presenter.view.AskForString();
+            return (newMoveSweatRate >= 1 && newMoveSweatRate <= 5);
         }
 
         /// <summary>
 		/// Creates new move
 		/// </summary>
-        public void AddNewMove()
+        /// <param name="newMove">A Move object with new move values</param>
+        public void CreateNewMove(Move newMove)
         {
-            string name = GetNewMoveName();
-            int sweatRate = GetNewMoveSweatRate();
-            string description = GetNewMoveDescription();
-            crud.CreateMove(new Move()
-            {
-                Name = name,
-                Description = description,
-                SweatRate = sweatRate
-            });
+            crud.CreateMove(newMove);
         }
 
         /// <summary>
 		/// Sets SelectedMove based on chosenMoveId
 		/// </summary>
-        ///
         ///<param name="moveName">The name of the move</param>
         public void SetSelectedMove(string moveName)
         {
@@ -152,29 +112,23 @@ namespace BornToMove.Business
         }
 
         /// <summary>
-		/// Sets userReview
-		/// </summary>
-        public void SetUserReview()
+        /// Validates the review made by user
+        /// </summary>
+        /// <param name="userReview">The user review</param>
+        /// <returns>A boolean with True if review is valid, or False if not valid</returns>
+        public bool ValidateUserReview(int userReview)
         {
-            userReview = presenter.view.AskForUserReview();
-            while (!(userReview >= 1 && userReview <= 5))
-            {
-                presenter.view.DisplayTryAgain("");
-                userReview = presenter.view.AskForNumber();
-            }
+            return (userReview >= 1 && userReview <= 5);
         }
 
         /// <summary>
-		/// Sets userIntensity
-		/// </summary>
-        public void SetUserIntensity()
+        /// Validates the insentity given by user
+        /// </summary>
+        /// <param name="userIntensity">The intensity given by user</param>
+        /// <returns>A boolean with True if intensity is valid, or False if not valid</returns>
+        public bool ValidateUserIntensity(int userIntensity)
         {
-            userIntensity = presenter.view.AskForUserIntensity();
-            while (!(userIntensity >= 1 && userIntensity <= 5))
-            {
-                presenter.view.DisplayTryAgain("");
-                userIntensity = presenter.view.AskForNumber();
-            }
+            return (userIntensity >= 1 && userIntensity <= 5);
         }
 
     }

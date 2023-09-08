@@ -5,9 +5,9 @@ namespace BornToMove
 {
     public class Presenter : IPresenter
 	{
-        // Properties
-		public View view;
-		private BuMove model;
+        // Fields
+		private View view;
+        private BuMove model;
 
         // Constructor
 		public Presenter(View view, BuMove model)
@@ -27,7 +27,7 @@ namespace BornToMove
             view.DisplayOpeningMessage();
             view.DisplayInitialOptions();
             // Asks user (1) generate move, or (2) choose move from list
-            model.SetInitialChoice();
+            SetInitialChoice();
 
             if (model.initialChoice == 1)
             { // Generates a move
@@ -44,11 +44,11 @@ namespace BornToMove
                 else
                 { // Display list of move names and asks user to choose one
                     view.DisplayMoveNames(model.moveNames);
-                    model.ChooseMoveFromList(model.moveNames);
+                    ChooseMoveFromList(model.moveNames);
 
                     if (model.choiceFromList == 0)
                     { // Asks user to enter new move
-                        model.AddNewMove();
+                        AddNewMove();
                     }
                     else
                     { // Sets selected move as chosen from list
@@ -63,9 +63,122 @@ namespace BornToMove
             else
             {   // Displays move and asks user review and intensity
                 view.DisplayMove(model.selectedMove);
-                model.SetUserReview();
-                model.SetUserIntensity();
+                SetUserReview();
+                SetUserIntensity();
             }
+        }
+
+        /// <summary>
+        /// Sets initial choice
+        /// </summary>
+        public void SetInitialChoice()
+        {
+            int initialChoice = view.AskForNumber();
+            while (!(model.ValidateInitialChoice(initialChoice)))
+            {
+                view.DisplayTryAgain("");
+                initialChoice = view.AskForNumber();
+            }
+            model.initialChoice = initialChoice;
+        }
+
+        /// <summary>
+		/// Sets choiceFromList and nameOfMoveChosenFromList
+		/// </summary>
+        /// <param name="moveNames">A Dictionary of move IDs and move names</param>
+        public void ChooseMoveFromList(Dictionary<int, string> moveNames)
+        {
+            int choiceFromList = view.AskForNumber();
+            while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
+            {
+                view.DisplayTryAgain("");
+                choiceFromList = view.AskForNumber();
+            }
+            model.choiceFromList = choiceFromList;
+            model.nameOfMoveChosenFromList = moveNames[choiceFromList];
+        }
+
+        public void AddNewMove()
+        {
+            string name = GetNewMoveName();
+            int sweatRate = GetNewMoveSweatRate();
+            string description = GetNewMoveDescription();
+            model.CreateNewMove(new Move()
+            {
+                Name = name,
+                SweatRate = sweatRate,
+                Description = description
+            });
+        }
+
+        /// <summary>
+        /// Gets new move name
+        /// </summary>
+        /// <returns>A String move name</returns>
+        private string GetNewMoveName()
+        {
+            view.AskForThis("move name");
+            string newName = view.AskForString();
+
+            while (model.ValidateNewMoveName(newName))
+            {
+                view.DisplayTryAgain("Move already exists. ");
+                newName = view.AskForString();
+            }
+            return newName;
+        }
+
+        /// <summary>
+        /// Gets new move sweatRate
+        /// </summary>
+        /// <returns>A Integer sweatRate</returns>
+        private int GetNewMoveSweatRate()
+        {
+            view.AskForThis("sweatRate");
+            int newSweatRate = view.AskForNumber();
+            while (!(model.ValidateNewMoveSweatRate(newSweatRate)))
+            {
+                view.DisplayTryAgain("SweatRate should be between 1 and 5. ");
+                newSweatRate = view.AskForNumber();
+            }
+            return newSweatRate;
+        }
+
+        /// <summary>
+        /// Sets newMoveDescription
+        /// </summary>
+        private string GetNewMoveDescription()
+        {
+            view.AskForThis("description");
+            return view.AskForString();
+        }
+
+        /// <summary>
+        /// Sets userReview
+        /// </summary>
+        public void SetUserReview()
+        {
+            int userReview = view.AskForUserReview();
+            while (!(model.ValidateUserReview(userReview)))
+            {
+                view.DisplayTryAgain("");
+                userReview = view.AskForNumber();
+            }
+            model.userReview = userReview;
+        }
+
+        /// <summary>
+		/// Sets userIntensity
+		/// </summary>
+        public void SetUserIntensity()
+        {
+            int userIntensity = view.AskForUserIntensity();
+            while (!(model.ValidateUserIntensity(userIntensity)))
+            {
+                view.DisplayTryAgain("");
+                userIntensity = view.AskForNumber();
+            }
+            model.userIntensity = userIntensity;
         }
     }
 }
