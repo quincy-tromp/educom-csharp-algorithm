@@ -13,8 +13,8 @@ namespace BornToMove.Business
         public int initialChoice = -1;
         public string nameChosenFromList = "";
         public int choiceFromList = -1;
-        public int userReview = -1;
-        public int userIntensity = -1;
+        public double userRating = -1;
+        public double userIntensity = -1;
 
         // Constructor
         public BuMove(MoveCrud crud)
@@ -115,9 +115,9 @@ namespace BornToMove.Business
         /// </summary>
         /// <param name="userReview">The user review</param>
         /// <returns>A boolean with True if review is valid, or False if not valid</returns>
-        public bool ValidateUserReview(int userReview)
+        public bool ValidateUserRating(double userReview)
         {
-            return (userReview >= 1 && userReview <= 5);
+            return (userReview >= 1.0 && userReview <= 5.0);
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace BornToMove.Business
         /// </summary>
         /// <param name="userIntensity">The intensity given by user</param>
         /// <returns>A boolean with True if intensity is valid, or False if not valid</returns>
-        public bool ValidateUserIntensity(int userIntensity)
+        public bool ValidateUserIntensity(double userIntensity)
         {
-            return (userIntensity >= 1 && userIntensity <= 5);
+            return (userIntensity >= 1.0 && userIntensity <= 5.0);
         }
 
         /// <summary>

@@ -63,9 +63,9 @@ namespace BornToMove
                 view.DisplayGenericError();
             }
             else
-            {   // Displays move and asks user review and intensity
+            {   // Displays move and asks user rating and intensity
                 view.DisplayMove(model.selectedMove);
-                model.userReview = GetUserReview();
+                model.userRating = GetUserRating();
                 model.userIntensity = GetUserIntensity();
             }
         }
@@ -165,10 +165,10 @@ namespace BornToMove
         /// Gets review made by user
         /// </summary>
         /// <returns>An integer between 1 and 5</returns>
-        public int GetUserReview()
+        public double GetUserRating()
         {
-            int userReview = view.AskForUserReview();
-            while (!(model.ValidateUserReview(userReview)))
+            double userReview = view.AskForUserRating();
+            while (!(model.ValidateUserRating(userReview)))
             {
                 view.DisplayTryAgain("");
                 userReview = view.AskForNumber();
@@ -180,9 +180,9 @@ namespace BornToMove
 		/// Gets intensity given by user
 		/// </summary>
         /// <returns>An Integer between 1 and 5</returns>
-        public int GetUserIntensity()
+        public double GetUserIntensity()
         {
-            int userIntensity = view.AskForUserIntensity();
+            double userIntensity = view.AskForUserIntensity();
             while (!(model.ValidateUserIntensity(userIntensity)))
             {
                 view.DisplayTryAgain("");

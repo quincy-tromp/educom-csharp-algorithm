@@ -1,10 +1,8 @@
-﻿using System;
-using BornToMove.DAL;
-using BornToMove.Business;
+﻿using BornToMove.DAL;
 
 namespace BornToMove
 {
-	public class View
+    public class View
 	{	/// <summary>
 		/// Displays welcome message
 		/// </summary>
@@ -33,8 +31,9 @@ namespace BornToMove
         }
 
         /// <summary>
-		/// Read user input as Integer
+		/// Read user number input
 		/// </summary>
+        /// <returns>An Integer</returns>
 		public int AskForNumber()
 		{
             Console.Write(":");
@@ -45,6 +44,23 @@ namespace BornToMove
             catch
             {
                 return AskForNumber();
+            }
+        }
+
+        /// <summary>
+        /// Read user double input 
+        /// </summary>
+        /// <returns>A Double</returns>
+        public double AskForDouble()
+        {
+            Console.Write(":");
+            try
+            {
+                return Convert.ToDouble(Console.ReadLine());
+            }
+            catch
+            {
+                return AskForDouble();
             }
         }
 
@@ -98,21 +114,21 @@ namespace BornToMove
         /// <summary>
 		/// Asks user for review
 		/// </summary>
-        public int AskForUserReview()
+        public double AskForUserRating()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Rate your experience on a scale of 1 to 5");
-            return AskForNumber();
+            Console.WriteLine("Rate your experience on a scale of 1.0 to 5.0");
+            return AskForDouble();
         }
 
         /// <summary>
 		/// Asks user for intensity
 		/// </summary>
-        public int AskForUserIntensity()
+        public double AskForUserIntensity()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Rate the intensity on a scale of 1 to 5");
-            return AskForNumber();
+            Console.WriteLine("Rate the intensity on a scale of 1.0 to 5.0");
+            return AskForDouble();
         }
 
         /// <summary>
