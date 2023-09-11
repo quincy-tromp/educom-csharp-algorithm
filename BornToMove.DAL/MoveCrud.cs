@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace BornToMove.DAL
 {
@@ -88,12 +89,12 @@ namespace BornToMove.DAL
         /// <summary>
         /// Creates a new move in DB
         /// </summary>
-        /// <param name="move">The new move to be created</param>
-		public void CreateMove(Move move)
+        /// <param name="newMove">The new move to be created</param>
+		public void CreateMove(Move newMove)
         {
             try
             {
-                context.Move.Add(move);
+                context.Move.Add(newMove);
                 context.SaveChanges();
             }
             catch (Exception e)
@@ -129,6 +130,28 @@ namespace BornToMove.DAL
         public bool IsMoveEmpty()
         {
             return (context.Move.Count() == 0);
+        }
+
+        /// <summary>
+        /// Creates a new move rating in DB
+        /// </summary>
+        /// <param name="newMoveRating">The new move rating to be created</param>
+        public void CreateMoveRating(MoveRating newMoveRating)
+        {
+            context.MoveRating.Add(newMoveRating);
+            context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Reads the average rating by move Id
+        /// </summary>
+        /// <param name="moveId">The Id of the move to read average rating for</param>
+        /// <returns>A double for move average rating</returns>
+        public double ReadAverageRating(int moveId)
+        {
+            return (from rating in context.MoveRating
+                    where rating.Move.Id == moveId
+                    select rating).Average(r => r.Rating);
         }
 	}
 }

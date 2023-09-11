@@ -15,6 +15,7 @@ namespace BornToMove.Business
         public int choiceFromList = -1;
         public double userRating = -1;
         public double userIntensity = -1;
+        public double averageRating = 0;
 
         // Constructor
         public BuMove(MoveCrud crud)
@@ -95,10 +96,10 @@ namespace BornToMove.Business
         }
 
         /// <summary>
-		/// Sets SelectedMove based on move name chosen from list
+		/// Gets SelectedMove based on move name chosen from list
 		/// </summary>
         ///<param name="moveName">The name of the move</param>
-        public void SetSelectedMove(string moveName)
+        public void GetSelectedMove(string moveName)
         {
             try
             {
@@ -178,6 +179,41 @@ namespace BornToMove.Business
             if (crud.IsMoveEmpty())
             {
                 CreateInitialMoves();
+            }
+        }
+
+        /// <summary>
+        /// Lets Crud add new move rating to DB
+        /// </summary>
+        public void AddMoveRating()
+        {
+            try
+            {
+                crud.CreateMoveRating(new MoveRating
+                {
+                    Move = selectedMove,
+                    Rating = userRating,
+                    Vote = userIntensity
+                }) ;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Process failed due to technical error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Gets the average rating for selected move
+        /// </summary>
+        public void GetAverageRating()
+        {
+            try
+            {
+                averageRating = crud.ReadAverageRating(selectedMove.Id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Process failed due to technical error: " + ex.Message);
             }
         }
     }

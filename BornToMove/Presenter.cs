@@ -28,7 +28,7 @@ namespace BornToMove
             view.DisplayInitialOptions();
 
             // Asks user (1) generate move, or (2) choose move from list
-            model.initialChoice = GetInitialChoice();
+            GetInitialChoice();
 
             if (model.initialChoice == 1)
             { // Generates a move
@@ -45,16 +45,15 @@ namespace BornToMove
                 else
                 { // Display list of move names and asks user to choose one
                     view.DisplayMoveNames(model.moveNames);
-                    model.choiceFromList = GetChoiceFromList(model.moveNames);
-                    model.nameChosenFromList = model.moveNames[model.choiceFromList];
+                    GetChoiceFromList(model.moveNames);
 
                     if (model.choiceFromList == 0)
                     { // Asks user to enter new move
                         AddNewMove();
                     }
                     else
-                    { // Sets selected move as chosen from list
-                        model.SetSelectedMove(model.nameChosenFromList);
+                    { // Gets selected move as chosen from list
+                        model.GetSelectedMove(model.nameChosenFromList);
                     }
                 }
             }
@@ -63,10 +62,17 @@ namespace BornToMove
                 view.DisplayGenericError();
             }
             else
-            {   // Displays move and asks user rating and intensity
+            { // Displays move
                 view.DisplayMove(model.selectedMove);
-                model.userRating = GetUserRating();
-                model.userIntensity = GetUserIntensity();
+                // Gets the average rating for selected move
+                model.GetAverageRating();
+
+                if (model.averageRating != 0)
+                { // Displays move average rating 
+                    view.DisplayAverageRating(model.averageRating);
+                }
+                // Asks user to enter move rating
+                AddNewMoveRating();
             }
         }
 
@@ -74,7 +80,7 @@ namespace BornToMove
         /// Sets initial choice
         /// </summary>
         /// <returns>An Integer, either 1 or 2</returns>
-        public int GetInitialChoice()
+        private void GetInitialChoice()
         {
             int initialChoice = view.AskForNumber();
             while (!(model.ValidateInitialChoice(initialChoice)))
@@ -82,7 +88,7 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 initialChoice = view.AskForNumber();
             }
-            return initialChoice;
+            model.initialChoice = initialChoice;
         }
 
         /// <summary>
@@ -90,7 +96,7 @@ namespace BornToMove
 		/// </summary>
         /// <param name="moveNames">A Dictionary of move IDs and move names</param>
         /// <returns>An Integer as key for move names list</returns>
-        public int GetChoiceFromList(Dictionary<int, string> moveNames)
+        private void GetChoiceFromList(Dictionary<int, string> moveNames)
         {
             int choiceFromList = view.AskForNumber();
             while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
@@ -98,18 +104,19 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 choiceFromList = view.AskForNumber();
             }
-            return choiceFromList;
-            
+            model.choiceFromList = choiceFromList;
+            model.nameChosenFromList = model.moveNames[model.choiceFromList];
         }
 
         /// <summary>
         /// Adds new move to DB
         /// </summary>
-        public void AddNewMove()
+        private void AddNewMove()
         {
             string name = GetMoveName();
             int sweatRate = GetSweatRate();
             string description = GetDescription();
+
             model.SaveMove(new Move()
             {
                 Name = name,
@@ -180,7 +187,7 @@ namespace BornToMove
 		/// Gets intensity given by user
 		/// </summary>
         /// <returns>An Integer between 1 and 5</returns>
-        public double GetUserIntensity()
+        private double GetUserIntensity()
         {
             double userIntensity = view.AskForUserIntensity();
             while (!(model.ValidateUserIntensity(userIntensity)))
@@ -189,6 +196,16 @@ namespace BornToMove
                 userIntensity = view.AskForNumber();
             }
             return userIntensity;
+        }
+
+        /// <summary>
+        /// Adds new move rating to DB
+        /// </summary>
+        private void AddNewMoveRating()
+        {
+            model.userRating = GetUserRating();
+            model.userIntensity = GetUserIntensity();
+            model.AddMoveRating();
         }
     }
 }

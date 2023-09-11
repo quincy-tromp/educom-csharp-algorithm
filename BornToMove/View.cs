@@ -117,7 +117,7 @@ namespace BornToMove
         public double AskForUserRating()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Rate your experience on a scale of 1.0 to 5.0");
+            Console.WriteLine("Give the move a rating between 1.0 and 5.0");
             return AskForDouble();
         }
 
@@ -127,7 +127,7 @@ namespace BornToMove
         public double AskForUserIntensity()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Rate the intensity on a scale of 1.0 to 5.0");
+            Console.WriteLine("How intense was this move on a scale of 1.0 to 5.0");
             return AskForDouble();
         }
 
@@ -163,6 +163,15 @@ namespace BornToMove
         public void DisplayTryAgain(string Error)
         {
             Console.WriteLine(Error + "Try again.");
+        }
+
+        /// <summary>
+        /// Displays move average rating
+        /// </summary>
+        /// <param name="averageRating"></param>
+        public void DisplayAverageRating(double averageRating)
+        {
+            Console.WriteLine("Average Rating: " + Double.Round(averageRating, 1));
         }
 	}
 }
