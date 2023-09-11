@@ -1,5 +1,5 @@
-﻿using BornToMove.DAL;
-using BornToMove.Business;
+﻿using BornToMove.Business;
+using BornToMove.DAL;
 
 namespace BornToMove
 {
@@ -21,12 +21,14 @@ namespace BornToMove
         /// </summary>
         public void RunApp()
         {
-            // Start application
+            // Startup application
+            model.StartupMoves();
             view.DisplayWelcome();
             view.DisplayOpeningMessage();
             view.DisplayInitialOptions();
+
             // Asks user (1) generate move, or (2) choose move from list
-            SetInitialChoice();
+            model.initialChoice = GetInitialChoice();
 
             if (model.initialChoice == 1)
             { // Generates a move
@@ -43,7 +45,8 @@ namespace BornToMove
                 else
                 { // Display list of move names and asks user to choose one
                     view.DisplayMoveNames(model.moveNames);
-                    ChooseMoveFromList(model.moveNames);
+                    model.choiceFromList = GetChoiceFromList(model.moveNames);
+                    model.nameChosenFromList = model.moveNames[model.choiceFromList];
 
                     if (model.choiceFromList == 0)
                     { // Asks user to enter new move
@@ -51,7 +54,7 @@ namespace BornToMove
                     }
                     else
                     { // Sets selected move as chosen from list
-                        model.SetSelectedMove(model.nameOfMoveChosenFromList);
+                        model.SetSelectedMove(model.nameChosenFromList);
                     }
                 }
             }
@@ -62,15 +65,16 @@ namespace BornToMove
             else
             {   // Displays move and asks user review and intensity
                 view.DisplayMove(model.selectedMove);
-                SetUserReview();
-                SetUserIntensity();
+                model.userReview = GetUserReview();
+                model.userIntensity = GetUserIntensity();
             }
         }
 
         /// <summary>
         /// Sets initial choice
         /// </summary>
-        public void SetInitialChoice()
+        /// <returns>An Integer, either 1 or 2</returns>
+        public int GetInitialChoice()
         {
             int initialChoice = view.AskForNumber();
             while (!(model.ValidateInitialChoice(initialChoice)))
@@ -78,14 +82,15 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 initialChoice = view.AskForNumber();
             }
-            model.initialChoice = initialChoice;
+            return initialChoice;
         }
 
         /// <summary>
-		/// Sets choiceFromList and nameOfMoveChosenFromList
+		/// Gets choice from list
 		/// </summary>
         /// <param name="moveNames">A Dictionary of move IDs and move names</param>
-        public void ChooseMoveFromList(Dictionary<int, string> moveNames)
+        /// <returns>An Integer as key for move names list</returns>
+        public int GetChoiceFromList(Dictionary<int, string> moveNames)
         {
             int choiceFromList = view.AskForNumber();
             while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
@@ -93,16 +98,19 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 choiceFromList = view.AskForNumber();
             }
-            model.choiceFromList = choiceFromList;
-            model.nameOfMoveChosenFromList = moveNames[choiceFromList];
+            return choiceFromList;
+            
         }
 
+        /// <summary>
+        /// Adds new move to DB
+        /// </summary>
         public void AddNewMove()
         {
-            string name = GetNewMoveName();
-            int sweatRate = GetNewMoveSweatRate();
-            string description = GetNewMoveDescription();
-            model.CreateNewMove(new Move()
+            string name = GetMoveName();
+            int sweatRate = GetSweatRate();
+            string description = GetDescription();
+            model.SaveMove(new Move()
             {
                 Name = name,
                 SweatRate = sweatRate,
@@ -111,51 +119,53 @@ namespace BornToMove
         }
 
         /// <summary>
-        /// Gets new move name
+        /// Gets name for new move
         /// </summary>
-        /// <returns>A String move name</returns>
-        private string GetNewMoveName()
+        /// <returns>A String with move name</returns>
+        private string GetMoveName()
         {
             view.AskForThis("move name");
-            string newName = view.AskForString();
+            string name = view.AskForString();
 
-            while (model.ValidateNewMoveName(newName))
+            while (model.ValidateNewMoveName(name))
             {
                 view.DisplayTryAgain("Move already exists. ");
-                newName = view.AskForString();
+                name = view.AskForString();
             }
-            return newName;
+            return name;
         }
 
         /// <summary>
-        /// Gets new move sweatRate
+        /// Gets sweatRate for new move
         /// </summary>
-        /// <returns>A Integer sweatRate</returns>
-        private int GetNewMoveSweatRate()
+        /// <returns>An Integer between 1 and 5</returns>
+        private int GetSweatRate()
         {
             view.AskForThis("sweatRate");
-            int newSweatRate = view.AskForNumber();
-            while (!(model.ValidateNewMoveSweatRate(newSweatRate)))
+            int sweatRate = view.AskForNumber();
+            while (!(model.ValidateNewMoveSweatRate(sweatRate)))
             {
                 view.DisplayTryAgain("SweatRate should be between 1 and 5. ");
-                newSweatRate = view.AskForNumber();
+                sweatRate = view.AskForNumber();
             }
-            return newSweatRate;
+            return sweatRate;
         }
 
         /// <summary>
-        /// Sets newMoveDescription
+        /// Gets description for new move
         /// </summary>
-        private string GetNewMoveDescription()
+        /// <returns>A string with new move description</returns>
+        private string GetDescription()
         {
             view.AskForThis("description");
             return view.AskForString();
         }
 
         /// <summary>
-        /// Sets userReview
+        /// Gets review made by user
         /// </summary>
-        public void SetUserReview()
+        /// <returns>An integer between 1 and 5</returns>
+        public int GetUserReview()
         {
             int userReview = view.AskForUserReview();
             while (!(model.ValidateUserReview(userReview)))
@@ -163,13 +173,14 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 userReview = view.AskForNumber();
             }
-            model.userReview = userReview;
+            return userReview;
         }
 
         /// <summary>
-		/// Sets userIntensity
+		/// Gets intensity given by user
 		/// </summary>
-        public void SetUserIntensity()
+        /// <returns>An Integer between 1 and 5</returns>
+        public int GetUserIntensity()
         {
             int userIntensity = view.AskForUserIntensity();
             while (!(model.ValidateUserIntensity(userIntensity)))
@@ -177,7 +188,7 @@ namespace BornToMove
                 view.DisplayTryAgain("");
                 userIntensity = view.AskForNumber();
             }
-            model.userIntensity = userIntensity;
+            return userIntensity;
         }
     }
 }

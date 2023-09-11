@@ -56,3 +56,8 @@
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/obj/Debug/net7.0/BornToMove.pdb
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/obj/Debug/net7.0/BornToMove.genruntimeconfig.cache
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/obj/Debug/net7.0/ref/BornToMove.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/bin/Debug/net7.0/Humanizer.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Design.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/bin/Debug/net7.0/Microsoft.Extensions.DependencyModel.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/bin/Debug/net7.0/Mono.TextTemplating.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove/bin/Debug/net7.0/System.CodeDom.dll

@@ -11,7 +11,7 @@ namespace BornToMove.Business
         public Move? selectedMove;
         public Dictionary<int, string> moveNames = new Dictionary<int, string>();
         public int initialChoice = -1;
-        public string nameOfMoveChosenFromList = "";
+        public string nameChosenFromList = "";
         public int choiceFromList = -1;
         public int userReview = -1;
         public int userIntensity = -1;
@@ -89,7 +89,7 @@ namespace BornToMove.Business
 		/// Creates new move
 		/// </summary>
         /// <param name="newMove">A Move object with new move values</param>
-        public void CreateNewMove(Move newMove)
+        public void SaveMove(Move newMove)
         {
             crud.CreateMove(newMove);
         }
@@ -130,6 +130,56 @@ namespace BornToMove.Business
             return (userIntensity >= 1 && userIntensity <= 5);
         }
 
+        /// <summary>
+        /// Creates initial moves 
+        /// </summary>
+        public void CreateInitialMoves()
+        {
+            List<Move> moves = new List<Move>();
+            moves.Add(new Move
+            {
+                Name = "Push Up",
+                SweatRate = 3,
+                Description = "Ga horizontaal liggen op teentoppen en handen. Laat het lijf langzaam zakken tot de neus de grond bijna raakt. " +
+                "Duw het lijf terug nu omhoog tot de ellebogen bijna gestrekt zijn. Vervolgens weer laten zakken. Doe dit 20 keer zonder tussenpauzes"
+            });
+            moves.Add(new Move
+            {
+                Name = "Planking",
+                SweatRate = 3,
+                Description = "Ga horizontaal liggen op teentoppen en onderarmen. Houdt deze positie 1 minuut vast"
+            });
+            moves.Add(new Move
+            {
+                Name = "Squat",
+                SweatRate = 5,
+                Description = "Ga staan met gestrekte armen. Zak door de knieën tot de billen de grond bijna raken. " +
+                "Ga weer volledig gestrekt staan. Herhaal dit 20 keer zonder tussenpauzes"
+            });
+
+            try
+            {
+                foreach (Move move in moves)
+                {
+                    crud.CreateMove(move);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Process failed due to technical error: " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Lets Crud create initial moves if move table is empty
+        /// </summary>
+        public void StartupMoves()
+        {
+            if (crud.IsMoveEmpty())
+            {
+                CreateInitialMoves();
+            }
+        }
     }
 }
 

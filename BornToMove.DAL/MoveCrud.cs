@@ -121,6 +121,15 @@ namespace BornToMove.DAL
             context.Move.Update(updatedMove);
             context.SaveChanges();
         }
+
+        /// <summary>
+        /// Checks if move table in DB is empty
+        /// </summary>
+        /// <returns>A boolean True if move table is empty, or False if not empty</returns>
+        public bool IsMoveEmpty()
+        {
+            return (context.Move.Count() == 0);
+        }
 	}
 }
 
