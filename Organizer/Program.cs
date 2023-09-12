@@ -8,9 +8,9 @@ namespace Organizer
     {
         public static void Main(string[] args)
         {
-            List<int> unosrtedList = createUnsortedList(getNumberOfElements());
+            List<int> unosrtedList = CreateUnsortedList(GetNumberOfElements());
             ShiftHighestSort shiftHighestSorter = new ShiftHighestSort();
-            RotateSort rotateSorter = new RotateSort();
+            RotateSort<int> rotateSorter = new RotateSort<int>();
             Stopwatch stopWatch = new Stopwatch();
 
             // Measurement 1: ShiftHighestSort
@@ -21,28 +21,28 @@ namespace Organizer
 
             // Measurement 2: RotateSort
             stopWatch.Restart();
-            List<int> sortedList_2 = rotateSorter.Sort(unosrtedList);
+            List<int> sortedList_2 = rotateSorter.Sort(unosrtedList, new Comparer());
             stopWatch.Stop();
             TimeSpan ts_2 = stopWatch.Elapsed;
 
             ShowList("Unsorted list", unosrtedList);
             // Result 1: ShiftHighestSort
-            ShowList("Sorted list 1", sortedList_1);
-            validateSortedList(sortedList_1);
+            ShowList("Sorted list 1, ShiftHighestSort", sortedList_1);
+            ValidateSortedList(sortedList_1);
             Console.WriteLine("RunTime " + ts_1);
             // Result 2: RotateSort
-            ShowList("Sorted list 2", sortedList_2);
-            validateSortedList(sortedList_2);
+            ShowList("Sorted list 2, RotateSort", sortedList_2);
+            ValidateSortedList(sortedList_2);
             Console.WriteLine("RunTime " + ts_2);
         }
 
-        private static int getNumberOfElements()
+        private static int GetNumberOfElements()
         {
             Console.WriteLine("How many elements should the list contain? ");
             int numberOfElements = Convert.ToInt32(Console.ReadLine());
             return numberOfElements;
         }
-        private static List<int> createUnsortedList(int numberOfElements)
+        private static List<int> CreateUnsortedList(int numberOfElements)
         {
             List<int> unsortedList = new(numberOfElements);
             Random random = new Random();
@@ -53,7 +53,7 @@ namespace Organizer
             return unsortedList;
         }
 
-        private static void validateSortedList(List<int> array)
+        private static void ValidateSortedList(List<int> array)
         {
             bool listIsValid = true;
             for (int i = 0; i < array.Count - 1; i++)
