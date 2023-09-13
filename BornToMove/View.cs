@@ -100,15 +100,34 @@ namespace BornToMove
         }
 
         /// <summary>
+		/// Displays moves with average rating
+		/// </summary>
+        /// <param name="moveChoiceList">The List of moves including average rating</param>
+        public void DisplayMoveChoiceList(List<MoveAverageRating> moveChoiceList)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("Choose one of the following moves: ");
+            foreach (MoveAverageRating move in moveChoiceList)
+            {
+                Console.Write(move.Move.Id);
+                Console.Write(" ");
+                Console.Write(move.Move.Name);
+                Console.Write(" - ");
+                DisplayAverageRating(move.AverageRating);
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
 		/// Displays move 
 		/// </summary>
         /// <param name="move">The Move object to display</param>
-        public void DisplayMove(Move move)
+        public void DisplayMove(MoveAverageRating move)
         {
             Console.WriteLine("\n");
-            Console.WriteLine("Move: " + move.Name);
-            Console.WriteLine("SweatRate: " + move.SweatRate);
-            Console.WriteLine("Description: " + move.Description);
+            Console.WriteLine("Move: " + move.Move.Name);
+            Console.WriteLine("SweatRate: " + move.Move.SweatRate);
+            Console.WriteLine("Description: " + move.Move.Description);
         }
 
         /// <summary>
@@ -171,7 +190,7 @@ namespace BornToMove
         /// <param name="averageRating"></param>
         public void DisplayAverageRating(double averageRating)
         {
-            Console.WriteLine("Average Rating: " + Double.Round(averageRating, 1));
+            Console.Write("Average Rating: " + Double.Round(averageRating, 1));
         }
 	}
 }

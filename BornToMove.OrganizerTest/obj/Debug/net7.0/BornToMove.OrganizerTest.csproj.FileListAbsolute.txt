@@ -101,3 +101,4 @@
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.OrganizerTest/obj/Debug/net7.0/BornToMove.OrganizerTest.pdb
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.OrganizerTest/obj/Debug/net7.0/BornToMove.OrganizerTest.genruntimeconfig.cache
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.OrganizerTest/obj/Debug/net7.0/ref/BornToMove.OrganizerTest.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.OrganizerTest/bin/Debug/net7.0/CoverletSourceRootsMapping

@@ -1,5 +1,6 @@
 ﻿using System;
 using BornToMove.DAL;
+using Organizer;
 
 namespace BornToMove.Business
 {
@@ -7,11 +8,12 @@ namespace BornToMove.Business
 	{
         // Fields
         private MoveCrud crud;
+        private RotateSort<MoveAverageRating> sorter;
         // Properties
-        public Move? selectedMove;
-        public Dictionary<int, string> moveNames = new Dictionary<int, string>();
+        public MoveAverageRating selectedMove = new MoveAverageRating();
+        public List<MoveAverageRating> moveChoiceList= new List<MoveAverageRating>();
         public int initialChoice = -1;
-        public string nameChosenFromList = "";
+        public Move moveChosenFromList;
         public int choiceFromList = -1;
         public double userRating = -1;
         public double userIntensity = -1;
@@ -21,6 +23,7 @@ namespace BornToMove.Business
         public BuMove(MoveCrud crud)
 		{
             this.crud = crud;
+            this.sorter = new RotateSort<MoveAverageRating>();
 		}
 
         /// <summary>
@@ -40,7 +43,17 @@ namespace BornToMove.Business
         /// <returns>A boolean with True if chioice is valid, or False if not valid</returns>
         public bool ValidateChoiceFromList(int choiceFromList)
         {
-            return (moveNames.ContainsKey(choiceFromList) || choiceFromList == 0);
+            if (choiceFromList == 0) { return true; };
+
+            foreach (MoveAverageRating move in moveChoiceList)
+            {
+                if (move.Move.Id == choiceFromList)
+                {
+                    moveChosenFromList = move.Move;
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -52,22 +65,30 @@ namespace BornToMove.Business
             if (moveIds != null)
             {
                 Random random = new Random();
-                selectedMove = crud.ReadMoveById(random.Next(1, moveIds.Count));
+                var id = random.Next(1, moveIds.Count);
+                selectedMove.Move = crud.ReadMoveById(id);
+                selectedMove.AverageRating = crud.ReadAverageRatingById(id);
             }
         }
 
         /// <summary>
-		/// Sets moveNames
+		/// Gets the move choice list
 		/// </summary>
-        public void GetMoveNameList()
+        public void GetMoveChoiceList()
         {
-            var names = crud.ReadMoveNames();
-            if (names != null)
+            List<Move>? moves = crud.ReadAllMoves();
+
+            if (moves != null)
             {
-                for (int i = 1; i < names.Count + 1; i++)
+                foreach (Move move in moves)
                 {
-                    moveNames.Add(i, names[i - 1]);
+                    moveChoiceList.Add(new MoveAverageRating()
+                    {
+                        Move = move,
+                        AverageRating = crud.ReadAverageRatingById(move.Id)
+                    });
                 }
+                moveChoiceList = sorter.Sort(moveChoiceList, new RatingsConverter());
             }
         }
 
@@ -78,7 +99,11 @@ namespace BornToMove.Business
         /// <returns>A boolean with True if move already exists, or False if move doesn't exist</returns>
         public bool ValidateNewMoveName(string newMoveName)
         {
-            return (moveNames.ContainsValue(newMoveName));
+            foreach (MoveAverageRating move in moveChoiceList)
+            {
+                if (move.Move.Name == newMoveName) { return true; }
+            }
+            return false;
         }
 
         public bool ValidateNewMoveSweatRate(int newMoveSweatRate)
@@ -96,14 +121,14 @@ namespace BornToMove.Business
         }
 
         /// <summary>
-		/// Gets SelectedMove based on move name chosen from list
+		/// Gets Selected move
 		/// </summary>
-        ///<param name="moveName">The name of the move</param>
-        public void GetSelectedMove(string moveName)
+        public void GetSelectedMove()
         {
             try
             {
-                selectedMove = crud.ReadMoveByName(moveName)[0];
+                selectedMove.Move = moveChosenFromList;
+                selectedMove.AverageRating = crud.ReadAverageRatingById(moveChosenFromList.Id);
             }
             catch (Exception e)
             {
@@ -191,7 +216,7 @@ namespace BornToMove.Business
             {
                 crud.CreateMoveRating(new MoveRating
                 {
-                    Move = selectedMove,
+                    Move = selectedMove.Move,
                     Rating = userRating,
                     Vote = userIntensity
                 }) ;
@@ -209,7 +234,7 @@ namespace BornToMove.Business
         {
             try
             {
-                averageRating = crud.ReadAverageRating(selectedMove.Id);
+                averageRating = crud.ReadAverageRatingById(selectedMove.Move.Id);
             }
             catch (Exception ex)
             {

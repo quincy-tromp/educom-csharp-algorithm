@@ -13,3 +13,8 @@
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/refint/BornToMove.Business.dll
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/BornToMove.Business.pdb
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/obj/Debug/net7.0/ref/BornToMove.Business.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/Organizer.deps.json
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/Organizer.runtimeconfig.json
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/Organizer
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/Organizer.dll
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.Business/bin/Debug/net7.0/Organizer.pdb

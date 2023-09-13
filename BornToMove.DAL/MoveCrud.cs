@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace BornToMove.DAL
 {
@@ -40,13 +41,14 @@ namespace BornToMove.DAL
             List<string?> names = new List<string?>();
             try
             {
-                names = context.Move.Select(move => move.Name).ToList();
+                return context.Move.Select(move => move.Name).ToList();
             }
             catch (Exception e)
             {
                 Console.WriteLine("Process failed due to technical error: " + e.Message);
+                return names;
             }
-            return names;
+            
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace BornToMove.DAL
         /// </summary>
         /// <param name="moveId">The Id of the move to read average rating for</param>
         /// <returns>A double for move average rating</returns>
-        public double ReadAverageRating(int moveId)
+        public double ReadAverageRatingById(int moveId)
         {
             return (from rating in context.MoveRating
                     where rating.Move.Id == moveId

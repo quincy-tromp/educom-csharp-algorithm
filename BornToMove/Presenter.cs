@@ -36,16 +36,16 @@ namespace BornToMove
             }
 			if (model.initialChoice == 2)
 			{ // Gets list of move names
-				model.GetMoveNameList();
+				model.GetMoveChoiceList();
                 
-                if (model.moveNames == null)
+                if (model.moveChoiceList == null)
                 { // Displays error if no move names retrieved
                     view.DisplayGenericError();
                 }
                 else
                 { // Display list of move names and asks user to choose one
-                    view.DisplayMoveNames(model.moveNames);
-                    GetChoiceFromList(model.moveNames);
+                    view.DisplayMoveChoiceList(model.moveChoiceList);
+                    GetChoiceFromList(model.moveChoiceList);
 
                     if (model.choiceFromList == 0)
                     { // Asks user to enter new move
@@ -53,8 +53,8 @@ namespace BornToMove
                     }
                     else
                     { // Gets selected move as chosen from list
-                        model.GetSelectedMove(model.nameChosenFromList);
-                    }
+                        model.GetSelectedMove();
+                    } 
                 }
             }
             if (model.selectedMove == null)
@@ -64,13 +64,7 @@ namespace BornToMove
             else
             { // Displays move
                 view.DisplayMove(model.selectedMove);
-                // Gets the average rating for selected move
-                model.GetAverageRating();
-
-                if (model.averageRating != 0)
-                { // Displays move average rating 
-                    view.DisplayAverageRating(model.averageRating);
-                }
+                view.DisplayAverageRating(model.selectedMove.AverageRating);
                 // Asks user to enter move rating
                 AddNewMoveRating();
             }
@@ -96,16 +90,15 @@ namespace BornToMove
 		/// </summary>
         /// <param name="moveNames">A Dictionary of move IDs and move names</param>
         /// <returns>An Integer as key for move names list</returns>
-        private void GetChoiceFromList(Dictionary<int, string> moveNames)
+        private void GetChoiceFromList(List<MoveAverageRating> moveChoiceList)
         {
-            int choiceFromList = view.AskForNumber();
-            while (!(moveNames.ContainsKey(choiceFromList) || choiceFromList == 0))
+            int userChoice = view.AskForNumber();
+            while (!(model.ValidateChoiceFromList(userChoice)))
             {
                 view.DisplayTryAgain("");
-                choiceFromList = view.AskForNumber();
+                userChoice = view.AskForNumber();
             }
-            model.choiceFromList = choiceFromList;
-            model.nameChosenFromList = model.moveNames[model.choiceFromList];
+            model.choiceFromList = userChoice;
         }
 
         /// <summary>

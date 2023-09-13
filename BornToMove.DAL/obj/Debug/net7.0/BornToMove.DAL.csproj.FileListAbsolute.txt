@@ -4,11 +4,11 @@
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/BornToMove.DAL.AssemblyInfo.cs
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/BornToMove.DAL.csproj.CoreCompileInputs.cache
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/bin/Debug/net7.0/BornToMove.DAL.deps.json
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/bin/Debug/net7.0/BornToMove.DAL.runtimeconfig.json
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/bin/Debug/net7.0/BornToMove.DAL.dll
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/bin/Debug/net7.0/BornToMove.DAL.pdb
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/BornToMove.DAL.dll
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/refint/BornToMove.DAL.dll
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/BornToMove.DAL.pdb
-/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/ref/BornToMove.DAL.dll
-/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/bin/Debug/net7.0/BornToMove.DAL.runtimeconfig.json
 /Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/BornToMove.DAL.genruntimeconfig.cache
+/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/obj/Debug/net7.0/ref/BornToMove.DAL.dll

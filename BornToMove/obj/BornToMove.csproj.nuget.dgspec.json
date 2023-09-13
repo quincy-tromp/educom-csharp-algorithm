@@ -28,6 +28,9 @@
             "projectReferences": {
               "/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/BornToMove.DAL.csproj": {
                 "projectPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/BornToMove.DAL.csproj"
+              },
+              "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj": {
+                "projectPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj"
               }
             }
           }
@@ -188,6 +191,59 @@
               "version": "[8.1.0, )"
             }
           },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.307/RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj",
+        "projectName": "Organizer",
+        "projectPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj",
+        "packagesPath": "/Users/quincytromp/.nuget/packages/",
+        "outputPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/quincytromp/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
           "imports": [
             "net461",
             "net462",

@@ -277,6 +277,16 @@
         "runtime": {
           "bin/placeholder/BornToMove.DAL.dll": {}
         }
+      },
+      "Organizer/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/Organizer.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Organizer.dll": {}
+        }
       }
     }
   },
@@ -680,11 +690,17 @@
       "type": "project",
       "path": "../BornToMove.DAL/BornToMove.DAL.csproj",
       "msbuildProject": "../BornToMove.DAL/BornToMove.DAL.csproj"
+    },
+    "Organizer/1.0.0": {
+      "type": "project",
+      "path": "../Organizer/Organizer.csproj",
+      "msbuildProject": "../Organizer/Organizer.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "BornToMove.DAL >= 1.0.0"
+      "BornToMove.DAL >= 1.0.0",
+      "Organizer >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -714,6 +730,9 @@
           "projectReferences": {
             "/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/BornToMove.DAL.csproj": {
               "projectPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/BornToMove.DAL/BornToMove.DAL.csproj"
+            },
+            "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj": {
+              "projectPath": "/Users/quincytromp/Projects/educom-csharp-algorithm/Organizer/Organizer.csproj"
             }
           }
         }

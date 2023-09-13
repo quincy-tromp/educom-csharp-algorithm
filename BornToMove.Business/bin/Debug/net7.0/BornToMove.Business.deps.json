@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v7.0": {
       "BornToMove.Business/1.0.0": {
         "dependencies": {
-          "BornToMove.DAL": "1.0.0"
+          "BornToMove.DAL": "1.0.0",
+          "Organizer": "1.0.0"
         },
         "runtime": {
           "BornToMove.Business.dll": {}
@@ -176,6 +177,11 @@
         "runtime": {
           "BornToMove.DAL.dll": {}
         }
+      },
+      "Organizer/1.0.0": {
+        "runtime": {
+          "Organizer.dll": {}
+        }
       }
     }
   },
@@ -291,6 +297,11 @@
       "hashPath": "pomelo.entityframeworkcore.mysql.7.0.0.nupkg.sha512"
     },
     "BornToMove.DAL/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Organizer/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
